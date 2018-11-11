@@ -12,12 +12,12 @@ The library contains just the logic for templates parsing and transformation to 
 
 For example, the following template:
 
-```jsp
+```js
 <header>
 	<h1>Header</h1>
 </header>
 <nav>Navigation</nav>
-<% for (var i = 0; i < 10; i++) { %>
+<% for (let i = 0; i < 10; i++) { %>
     <section id="<%= "main_" + i %>">text: <%= i %></section>
 <% } %>
 <footer>Footer</footer>
@@ -47,7 +47,7 @@ export default function(actions, el) {if (el == null) el = actions.df();
 	actions.add(el, actions.txt(`Navigation`));
 	el = parent;
 }
- for (var i = 0; i < 10; i++) { 
+ for (let i = 0; i < 10; i++) { 
 {
 	let parent = el;
 	el = actions.el("section");
@@ -84,7 +84,7 @@ There also exists demo project - tdom-demo.
 ## Supported syntax:
 
 ### <% %> - JavaScript code block
-```jsp
+```js
 <%
 let x = 185;
 function acceptNode(node) {
@@ -97,18 +97,18 @@ function acceptNode(node) {
 ```
 
 ### <%= "" %> - Inserting text in DOM nodes or use the text in attribute values
-```jsp
+```js
 <section id="<%= "main_" + i %>">Location: <%= window.location %></section>
 ```
 
 ### <%+ domNode %> - Inserting DOM nodes in the tree
-```jsp
+```js
 let div = document.createElement('div');
 <section><%+ div %></section>
 ```
 
 ### <%! %> - Statements to be put before the DOM-generating function
-```jsp
+```js
 <%!
 import Utils from "/app/utils/Utils.js";
 %>
@@ -118,7 +118,7 @@ import Utils from "/app/utils/Utils.js";
 
 Every code block ending with "(" or "=" starts a function wrapper in the resulting code, adding all following elements into the newly created document fragment, and every code block beginning with ")", ";", or "," finishd the wrapper.
 
-```jsp
+```js
 <%
 // saves document fragment with H1 element in variable h1
 let h1 = %><h1>HEADER</h1><% ;
