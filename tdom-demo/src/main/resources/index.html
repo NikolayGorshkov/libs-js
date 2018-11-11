@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Templates test</title>
+<script type="module">
+
+(async () => {
+	var registrations = await navigator.serviceWorker.getRegistrations();
+	await Promise.all(registrations.filter(reg => reg.active && /^https?:\/\/[^\/]+\/development-sw\.js$/.test(reg.active.scriptURL)).map(async reg => {
+		await reg.unregister();
+		console.log('development-sw - Unregistration succeeded.');
+	}));
+	var reg = await navigator.serviceWorker.register('/development-sw.js', {scope: '/'});
+	await navigator.serviceWorker.ready;
+	console.log('development-sw - Installation succeeded. Scope is ' + reg.scope);
+	
+	import ('./app/App.js');
+})();
+
+</script>
+</head>
+<body>
+
+<div id="appRoot"></div>
+
+</body>
+</html>

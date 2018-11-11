@@ -1,0 +1,107 @@
+<%!
+
+import Utils from "/app/utils/Utils.js";
+
+%><%
+
+console.log('Log from template:' + Utils.utilsSample());
+
+%>
+
+<style>
+
+.d1 {
+	border: 1px solid red;
+}
+.d2 {
+	border: 1px solid green;
+}
+.d3 {
+	border: 1px solid blue;
+}
+.d4 {
+	border: 1px solid yellow;
+}
+.d5 {
+	border: 1px solid magenta;
+}
+
+</style>
+
+<header>Header</header>
+
+<nav>
+Navigation
+</nav>
+
+<%
+
+var x = 185;
+
+function logNode(node) {
+    //console.log("N:" + node.nodeName);
+
+    var tempDiv = document.createElement('div');
+    tempDiv.appendChild(node);
+    //console.log("N:" + tempDiv.innerHTML);
+}
+
+%>
+
+<%
+let y = 185;
+function acceptNode(node) {
+    console.log(node);
+}
+%>
+<% for (let i = 0; i < 10; i++) { %>
+    <section>Section #<%= i %></section>
+<% } %>
+
+<section id="main">
+
+	<div class="d1">
+		DIV 1
+		<div class="d2">
+			DIV 2
+			<div class="d3">DIV3</div>
+		</div>
+		<div class="d4">
+			DIV 4
+			<div class="d5">DIV5</div>
+		</div>
+	</div>
+
+    MainContent
+
+    <form id="fId" name="fName" >
+        <input type="checkbox" name="zzz" checked="checked" value="z" />
+    </form>
+</section>
+
+<% logNode( %>
+    <section id="main-arg">
+    <%
+    var loc = window.location.href;
+    %>
+    Location: <%= loc %></section>
+<% ); %>
+
+<% var h1 = %><h1>HEADER</h1><% ; %>
+
+<header>
+<% for (let i = 0; i < 5; i++) { %>
+    <!-- comment here -->
+    <%+ h1.cloneNode(true) %>
+<% } %>
+</header>
+
+<section id="main1"><%= "zzz" %></section>
+
+<% for (var i = 0; i < 10; i++) { %>
+    <section id="<%= "main_" + i %>">Z<%= i + "|" + x %></section>
+<% } %>
+
+
+<footer>Footer</footer>
+
