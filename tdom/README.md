@@ -26,45 +26,50 @@ For example, the following template:
 will be converted to:
 
 ```js
-export default function(actions, el) {if (el == null) el = actions.df();
-{
-	let parent = el;
-	el = actions.el("header");
-	actions.add(parent, el);
+export default function(actions, el) {
+	if (el == null) {
+		el = actions.df();
+	}
 	{
 		let parent = el;
-		el = actions.el("h1");
+		el = actions.el("header");
 		actions.add(parent, el);
-		actions.add(el, actions.txt(`Header`));
+		{
+			let parent = el;
+			el = actions.el("h1");
+			actions.add(parent, el);
+			actions.add(el, actions.txt(`Header`));
+			el = parent;
+		}
 		el = parent;
 	}
-	el = parent;
+	{
+		let parent = el;
+		el = actions.el("nav");
+		actions.add(parent, el);
+		actions.add(el, actions.txt(`Navigation`));
+		el = parent;
+	}
+	for (let i = 0; i < 10; i++) { 
+		{
+			let parent = el;
+			el = actions.el("section");
+			actions.add(parent, el);
+			actions.atr(el, "id", ( "main_" + i ));
+			actions.add(el, actions.txt(`text: `));
+			actions.add(el, actions.txt( i ));
+			el = parent;
+		}
+	} 
+	{
+		let parent = el;
+		el = actions.el("footer");
+		actions.add(parent, el);
+		actions.add(el, actions.txt(`Footer`));
+		el = parent;
+	}
+	return el;
 }
-{
-	let parent = el;
-	el = actions.el("nav");
-	actions.add(parent, el);
-	actions.add(el, actions.txt(`Navigation`));
-	el = parent;
-}
- for (let i = 0; i < 10; i++) { 
-{
-	let parent = el;
-	el = actions.el("section");
-	actions.add(parent, el);
-	actions.atr(el, "id", ( "main_" + i ));
-	actions.add(el, actions.txt(`text: `));
-	actions.add(el, actions.txt( i ));
-	el = parent;
-}
- } 
-{
-	let parent = el;
-	el = actions.el("footer");
-	actions.add(parent, el);
-	actions.add(el, actions.txt(`Footer`));
-	el = parent;
-}return el;}
 ```
 
 Note: the library is not intended to be a full-features HTML parser. It is just a easier way to write DOM API calls. It has, for example, the following limitations:
@@ -103,7 +108,7 @@ function acceptNode(node) {
 
 ### <%+ domNode %> - Inserting DOM nodes in the tree
 ```js
-let div = document.createElement('div');
+<% let div = document.createElement('div'); %>
 <section><%+ div %></section>
 ```
 
